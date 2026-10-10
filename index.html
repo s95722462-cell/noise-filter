@@ -386,7 +386,7 @@ async function openNight(id) {
     d.id = "clip-" + c.id;
     d.innerHTML = `<span class="t">${hms(new Date(c.start))}</span><span class="tag ${isSnore(c) ? "s" : "o"}">${isSnore(c) ? "😴 코골이" : "🔊 기타"}</span><span class="m"><span class="lv" style="width:${Math.round(w * 0.6)}px"></span>${durTxt(c.dur)} · 최대 ${c.peak}dB${isSnore(c) && c.period ? ` · ${c.period}초 간격` : ""}</span><button class="play" title="듣기">▶</button><button class="dl" title="내려받기">⬇</button><button class="rm" title="지우기">🗑</button>`;
     d.querySelector(".play").onclick = e => play(c, e.currentTarget);
-    d.querySelector(".dl").onclick = () => download(c.blob, `코골이노트_${fname(new Date(c.start))}.wav`);
+    d.querySelector(".dl").onclick = () => download(c.blob, `SnoreNote_${fname(new Date(c.start))}.wav`);
     d.querySelector(".rm").onclick = async () => { if (!confirm("이 녹음을 지울까요?")) return; await del("clips", c.id); const nn = (await getAll("nights")).find(x => x.id === id); if (nn) { nn.count = Math.max(0, nn.count - 1); nn.secs = Math.max(0, (nn.secs || 0) - c.dur); nn.stat = null; await put("nights", nn); } renderNights(id); };
     box.appendChild(d);
   });
@@ -422,7 +422,7 @@ $("dlAll").onclick = async () => {                        // 한 밤의 조각�
   const parts = [];
   for (const c of clips) { const buf = new Int16Array((await c.blob.arrayBuffer()).slice(44)); const f = new Float32Array(buf.length); for (let i = 0; i < buf.length; i++) f[i] = buf[i] / 0x7fff; parts.push(f, new Float32Array(SR / 2)); }
   const all = new Float32Array(parts.reduce((s, p) => s + p.length, 0)); let o = 0; parts.forEach(p => { all.set(p, o); o += p.length; });
-  download(wav(all), `코골이노트_${fname(new Date(clips[0].start))}_모음.wav`); toast(`녹음 ${clips.length}개를 파일 하나로 내려받았습니다`);
+  download(wav(all), `SnoreNote_${fname(new Date(clips[0].start))}_all.wav`); toast(`녹음 ${clips.length}개를 파일 하나로 내려받았습니다`);
 };
 $("delNight").onclick = async () => {
   if (!confirm("이 밤의 기록과 녹음을 모두 지울까요? 되돌릴 수 없습니다.")) return;
