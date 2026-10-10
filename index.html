@@ -73,14 +73,51 @@
   #night .dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity 1s; } #night.dark .dim { opacity: .75; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: #1f2747; color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 14px; opacity: 0; transition: .25s; z-index: 99; max-width: 92vw; text-align: center; pointer-events: none; }
   .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  /* 4차: 메모·별표·저장 공간·잠금·도움말 */
+  header .help { margin-left: auto; flex: none; }
+  .night-li .main { flex: 1; min-width: 0; } .night-li .s { display: block; overflow-wrap: anywhere; }
+  .night-li .tg { margin-left: 6px; letter-spacing: 1px; }
+  .night-li .memo { display: block; color: #c7cdea; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .star { flex: none; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 18px; color: #4b5578; padding: 0; }
+  .star.on { color: #fbbf24; border-color: #fbbf2466; background: #fbbf2414; }
+  .ninfo { margin: -4px 0 10px; }
+  .memo-box { background: #0f1528; border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin: 4px 0 12px; }
+  .memo-box b { font-size: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .chip { border: 1px solid var(--line); background: #131a2e; color: var(--dim); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: 14px; }
+  .chip.on { background: #6d7ff733; border-color: var(--accent); color: #fff; font-weight: 700; }
+  textarea { width: 100%; min-height: 64px; resize: vertical; background: #0b1020; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 16px; color: var(--ink); }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; } .acts .btn { flex: 1 1 140px; padding: 0 10px; }
+  .bar { height: 10px; border-radius: 999px; background: #0b1020; border: 1px solid var(--line); overflow: hidden; flex: 1; min-width: 120px; } .bar i { display: block; height: 100%; width: 0; background: var(--accent2); }
+  .week div { cursor: pointer; } .week s { text-decoration: none; font-size: 10px; min-height: 13px; line-height: 13px; }
+  .week div.on em { color: var(--warm); }
+  .link { background: none; border: 0; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 6px; font-size: 14px; }
+  #modal { position: fixed; inset: 0; z-index: 70; background: #000a; display: flex; align-items: flex-end; justify-content: center; padding: 12px; }
+  #modal[hidden] { display: none; }
+  #modal .box { background: var(--card); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 560px; max-height: 88vh; overflow: auto; padding: 18px 16px 20px; position: relative; }
+  #modal h3 { margin: 0 34px 10px 0; font-size: 18px; } #modal h4 { margin: 14px 0 4px; font-size: 15px; } #modal p, #modal li { font-size: 14px; color: #c7cdea; margin: 4px 0; } #modal ul, #modal ol { padding-left: 20px; margin: 4px 0; }
+  #modal .x { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: #1a2340; cursor: pointer; }
+  @media (min-width: 600px) { #modal { align-items: center; } }
+  .hint { border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; margin-top: 8px; font-size: 13px; color: var(--dim); } .hint.me { border-color: var(--accent); color: #dfe4ff; background: #6d7ff714; }
+  .big:disabled { opacity: .55; cursor: default; }
+  #lock { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+  #lock[hidden] { display: none; }
+  #lock .lk { width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  #lkMsg { min-height: 24px; } #lkMsg.bad { color: var(--red); }
+  .dots { display: flex; gap: 14px; } .dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent); } .dots i.f { background: var(--accent); }
+  .dots.shake { animation: sh .4s; } @keyframes sh { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+  .pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 12px; justify-content: center; }
+  .pad button { height: 60px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); font-size: 22px; cursor: pointer; } .pad button:empty { visibility: hidden; }
   @media (max-width: 480px) { .sum { grid-template-columns: repeat(2, 1fr); } .sum b { font-size: 17px; } .row > label { min-width: 100%; } }
+  @media (max-width: 360px) { .wrap { padding: 14px 10px 50px; } .card { padding: 14px 12px; } .seg button { padding: 8px 10px; } header small { font-size: 12px; } .pad { grid-template-columns: repeat(3, 64px); } .clip { gap: 6px; } .clip .t { min-width: 0; } .clip button { width: 34px; height: 36px; font-size: 14px; } .clip .m { min-width: 100%; order: 5; } .meter { min-width: 120px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="mark">🌙</div>
-    <div><b>코골이 노트</b><small>잘 때 켜 두면, 소리가 날 때만 녹음해 아침에 들려 드려요</small></div>
+    <div><b>코골이 노트</b><small>잘 때 켜 두면 소리가 날 때만 녹음해, 아침에 들려 드려요</small></div>
+    <button class="btn help" id="helpBtn" title="도움말">❓ 도움말</button>
   </header>
 
   <section class="card">
@@ -101,8 +138,8 @@
 
   <button class="big" id="startBtn">🌙 잠들기 시작</button>
   <div class="tip" style="margin:12px 0 14px">
-    📱 <b>휴대폰을 충전기에 꽂고</b>, 머리맡 50cm~1m 거리에 두세요.<br>
-    🔆 <b>화면을 끄지 말고</b> 켜 둔 채 주무세요 (화면은 아주 어둡게 바뀝니다). 아이폰은 화면을 잠그거나 다른 앱으로 가면 녹음이 멈춥니다.<br>
+    📱 <b>휴대폰을 충전기에 꽂고</b> 머리맡 50cm~1m 거리에 두세요.<br>
+    🔆 <b>화면을 켜 둔 채</b> 주무세요 (화면은 아주 어둡게 바뀝니다). 아이폰은 화면을 잠그거나 다른 앱으로 가면 녹음이 멈춥니다.<br>
     🔒 녹음은 <b>이 휴대폰 안에만</b> 저장되고 인터넷으로 보내지 않습니다.
   </div>
 
@@ -117,14 +154,41 @@
     <div class="nights" id="nights"></div>
     <div id="detail" hidden style="margin-top:14px">
       <div class="sum" id="sum"></div>
+      <div class="muted ninfo" id="nInfo"></div>
       <div class="graph" id="graph" title="막대를 누르면 그 시각의 녹음으로 갑니다"></div>
       <div class="gx" id="gx"></div>
       <div class="legend"><span style="--c:var(--warm)">코골이 추정</span><span style="--c:#6d7ff7">기타 소리</span><span style="--c:#2a3354">녹음 안 함 (분마다 가장 큰 소리)</span></div>
-      <div class="row" style="margin-top:0"><button class="btn" id="dlAll">⬇ 이 밤 녹음 모두 내려받기</button><button class="btn" id="delNight" style="color:var(--red)">🗑 이 밤 기록 지우기</button></div>
+      <div class="memo-box">
+        <b>📝 이 밤 메모</b> <span class="muted" id="memoSaved"></span>
+        <div class="chips" id="tags"></div>
+        <textarea id="memo" maxlength="500" placeholder="예) 저녁 늦게 먹음, 새 베개 첫날, 에어컨 켬…"></textarea>
+      </div>
+      <div class="acts">
+        <button class="btn" id="dlAll">⬇ 모두 이어서 내려받기</button>
+        <button class="btn" id="shareBtn">📤 보내기</button>
+        <button class="btn" id="csvNight">📄 표(CSV) 내려받기</button>
+        <button class="btn" id="delNight" style="color:var(--red)">🗑 이 밤 지우기</button>
+      </div>
       <div id="clips"></div>
     </div>
   </section>
-  <div class="foot">코골이 노트 · 참고용 기록이며 의료 검사가 아닙니다 · 문의 : <a href="mailto:ds5yrj@hotmail.com" style="color:var(--accent)">ds5yrj@hotmail.com</a></div>
+
+  <section class="card">
+    <h2>⚙️ 저장 공간 · 내보내기 · 잠금</h2>
+    <div class="row"><label>저장 공간</label><div class="bar" id="stoBar"><i></i></div></div>
+    <div class="muted" id="stoTxt">계산 중…</div>
+    <div class="row"><label>파일 형식</label>
+      <div class="seg" id="fmt"><button data-v="mp3">MP3 (작게)</button><button data-v="wav">WAV (원본)</button></div>
+    </div>
+    <div class="row"><label>자동 정리</label>
+      <div class="seg" id="keep"><button data-v="0">끄기</button><button data-v="14">14일</button><button data-v="30">30일</button><button data-v="60">60일</button></div>
+    </div>
+    <div class="muted">자동 정리를 켜면 정한 날짜보다 오래된 밤은 앱을 열 때 지웁니다. <b style="color:#fbbf24">★ 별표</b>한 밤은 지우지 않아요.</div>
+    <div class="row"><label>잠금 화면</label><button class="btn" id="pinBtn">🔒 PIN 4자리 설정</button></div>
+    <div class="muted">앱을 열 때 PIN을 물어 녹음 목록을 가려 주는 간단한 가림 화면입니다 (암호화 같은 강한 보안은 아닙니다).</div>
+    <div class="row"><label>모든 밤 요약</label><button class="btn" id="csvAll">📄 전체 기록 표(CSV)</button></div>
+  </section>
+  <div class="foot">코골이 노트 · 참고용 기록이며 의료 검사가 아닙니다 · 문의 : <a href="mailto:ds5yrj@hotmail.com" style="color:var(--accent)">ds5yrj@hotmail.com</a> · <span id="ver">v4</span></div>
 </div>
 
 <div id="night" hidden>
@@ -135,30 +199,59 @@
   <div id="nCount">녹음 0개</div>
   <button id="nStop">☀️ 일어났어요 (녹음 끝)</button>
 </div>
+<div id="lock" hidden>
+  <div class="lk">
+    <div class="mark">🌙</div>
+    <b>코골이 노트</b>
+    <div id="lkMsg">PIN 4자리를 눌러 주세요</div>
+    <div class="dots" id="lkDots"><i></i><i></i><i></i><i></i></div>
+    <div class="pad" id="lkPad"></div>
+    <button class="link" id="lkCancel" hidden>취소</button>
+    <button class="link" id="lkForgot">PIN을 잊었어요 → 모든 기록 지우기</button>
+    <div class="muted">간단한 가림 화면입니다. 녹음을 암호화하지는 않습니다.</div>
+  </div>
+</div>
+<div id="modal" hidden><div class="box"><button class="x" id="mClose" title="닫기">✕</button><div id="mBody"></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
 (() => {
 const $ = id => document.getElementById(id);
 const ls = { get(k, d) { try { const v = localStorage.getItem("snore_" + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-             set(k, v) { try { localStorage.setItem("snore_" + k, JSON.stringify(v)); } catch (e) {} } };
+             set(k, v) { try { if (v == null) localStorage.removeItem("snore_" + k); else localStorage.setItem("snore_" + k, JSON.stringify(v)); } catch (e) {} } };
 const toast = (m, ms = 2600) => { const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), ms); };
 const pad = n => String(n).padStart(2, "0");
 const hm = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 const hms = d => `${hm(d)}:${pad(d.getSeconds())}`;
+const md = d => `${d.getMonth() + 1}/${d.getDate()}`;
 const durTxt = s => s >= 60 ? `${Math.floor(s / 60)}분 ${Math.round(s % 60)}초` : `${Math.round(s)}초`;
+const bytesTxt = b => b >= 1e9 ? (b / 1e9).toFixed(1) + "GB" : b >= 1e6 ? (b / 1e6).toFixed(1) + "MB" : Math.max(0, Math.round(b / 1e3)) + "KB";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isAndroid = /Android/i.test(navigator.userAgent);
 
 // ================= 설정 =================
-const CFG = Object.assign({ mode: "all", from: "01:00", to: "06:00", sens: 12 }, ls.get("cfg", {}));
+const CFG = Object.assign({ mode: "all", from: "01:00", to: "06:00", sens: 12, fmt: "mp3", keep: 0 }, ls.get("cfg", {}));
 const saveCfg = () => ls.set("cfg", CFG);
 function renderCfg() {
   [...$("mode").children].forEach(b => b.classList.toggle("on", b.dataset.v === CFG.mode));
   [...$("sens").children].forEach(b => b.classList.toggle("on", +b.dataset.v === CFG.sens));
+  [...$("fmt").children].forEach(b => b.classList.toggle("on", b.dataset.v === CFG.fmt));
+  [...$("keep").children].forEach(b => b.classList.toggle("on", +b.dataset.v === CFG.keep));
   $("winBox").style.display = CFG.mode === "win" ? "" : "none";
   $("tFrom").value = CFG.from; $("tTo").value = CFG.to;
+  $("pinBtn").textContent = ls.get("pin", null) ? "🔓 잠금 끄기" : "🔒 PIN 4자리 설정";
 }
 [...$("mode").children].forEach(b => b.onclick = () => { CFG.mode = b.dataset.v; saveCfg(); renderCfg(); });
 [...$("sens").children].forEach(b => b.onclick = () => { CFG.sens = +b.dataset.v; saveCfg(); renderCfg(); });
+[...$("fmt").children].forEach(b => b.onclick = () => { CFG.fmt = b.dataset.v; saveCfg(); renderCfg(); toast(CFG.fmt === "mp3" ? "MP3: 파일이 WAV의 약 8분의 1 크기예요" : "WAV: 원본 그대로, 파일이 큽니다"); });
+[...$("keep").children].forEach(b => b.onclick = async () => {
+  const v = +b.dataset.v, old = CFG.keep; if (v === old) return;
+  CFG.keep = v; renderCfg();
+  if (v) { const n = (await cleanupList()).length; if (n && !confirm(`${v}일보다 오래된 밤 ${n}개를 지금 지웁니다 (★ 별표한 밤은 남김). 계속할까요?`)) { CFG.keep = old; renderCfg(); return; } }
+  saveCfg(); if (v) { const k = await cleanup(); toast(k ? `오래된 밤 ${k}개를 지웠습니다` : `이제 ${v}일보다 오래된 밤은 저절로 지워집니다`); renderNights(); renderStorage(); } else toast("자동 정리를 껐습니다");
+});
 $("tFrom").onchange = e => { CFG.from = e.target.value || "01:00"; saveCfg(); };
 $("tTo").onchange = e => { CFG.to = e.target.value || "06:00"; saveCfg(); };
 renderCfg();
@@ -182,7 +275,11 @@ async function tx(store, mode, fn) { const d = await db(); return new Promise((o
 const put = (store, v) => tx(store, "readwrite", s => s.put(v));
 const del = (store, k) => tx(store, "readwrite", s => s.delete(k));
 const getAll = store => tx(store, "readonly", s => s.getAll());
+const getNight = id => tx("nights", "readonly", s => s.get(id));
+// 밤 기록 한 개를 읽어서 고치고 바로 저장 (메모·별표·요약이 서로 덮어쓰지 않게)
+const updNight = (id, fn) => tx("nights", "readwrite", s => { const r = s.get(id); r.onsuccess = () => { if (r.result) { fn(r.result); s.put(r.result); } }; return r; });
 async function clipsOf(nightId) { const d = await db(); return new Promise((ok, no) => { const r = d.transaction("clips").objectStore("clips").index("night").getAll(nightId); r.onsuccess = () => ok(r.result.sort((a, b) => a.start - b.start)); r.onerror = () => no(r.error); }); }
+async function delNightAll(id) { const ids = (await clipsOf(id)).map(c => c.id); await tx("clips", "readwrite", s => ids.forEach(k => s.delete(k))); await del("nights", id); }
 try { navigator.storage?.persist?.(); } catch (e) {}       // 휴대폰이 저장 공간 정리할 때 지우지 않게 부탁
 
 // ================= 마이크 · 소리 재기 =================
@@ -224,14 +321,15 @@ const pct = db => Math.max(0, Math.min(100, (db + 80) * 1.4));   // -80dB ~ -10d
 
 // ================= 🎙 시험해 보기 =================
 let testing = false, testT = 0;
+function testStop() { testing = false; clearTimeout(testT); $("testBtn").textContent = "🎙 시험해 보기"; $("tMeter").querySelector("i").style.width = "0"; }
 $("testBtn").onclick = async () => {
-  if (testing) { testing = false; clearTimeout(testT); micClose(); $("testBtn").textContent = "🎙 시험해 보기"; return; }
+  if (testing) { testStop(); micClose(); return; }
+  if (night) return;
   if (!(await micOpen())) return;
-  testing = true; $("testBtn").textContent = "■ 시험 그만"; const fl = Floor(); let over = 0;
+  testing = true; $("testBtn").textContent = "■ 시험 그만"; const fl = Floor();
   onChunk = (y, db, sec) => {
     fl.feed(db); const thr = fl.v + CFG.sens;
     $("tMeter").querySelector("i").style.width = pct(db) + "%"; $("tThr").style.left = pct(thr) + "%";
-    if (db > thr) over++;
     $("testInfo").textContent = `지금 소리 ${Math.round(db)}dB · 녹음 기준 ${Math.round(thr)}dB (주변 소음 ${Math.round(fl.v)}dB + ${CFG.sens}) — ${db > thr ? "🔴 녹음될 소리" : "조용함"}`;
   };
   testT = setTimeout(() => testing && $("testBtn").click(), 60000);   // 1분 뒤 저절로 끝
@@ -239,26 +337,33 @@ $("testBtn").onclick = async () => {
 
 // ================= 🌙 밤 녹음 =================
 const PRE = 2, POST = 5, MAXLEN = 90, MINLEN = 0.4, MAXCLIPS = 400;
-let night = null, wake = null;
-function wav(f32) {                                       // 16bit WAV
-  const b = new ArrayBuffer(44 + f32.length * 2), v = new DataView(b), w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
-  w(0, "RIFF"); v.setUint32(4, 36 + f32.length * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
-  v.setUint32(24, SR, true); v.setUint32(28, SR * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, f32.length * 2, true);
-  let peak = 0; for (let i = 0; i < f32.length; i++) peak = Math.max(peak, Math.abs(f32[i]));
-  const g = peak > 0 && peak < 0.5 ? Math.min(8, 0.5 / peak) : 1;   // 작은 소리는 들리게 키움 (최대 8배)
-  for (let i = 0; i < f32.length; i++) v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, f32[i] * g)) * 0x7fff, true);
-  return new Blob([b], { type: "audio/wav" });
+let night = null, wake = null, flushRec = null;
+function wavHead(n) {                                     // 16kHz 한 채널 16bit WAV 머리 (44바이트)
+  const v = new DataView(new ArrayBuffer(44)), w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, SR, true); v.setUint32(28, SR * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, n * 2, true);
+  return v.buffer;
 }
+function wav(f32) {                                       // 녹음 저장용: 작은 소리는 들리게 키움 (최대 8배)
+  let peak = 0; for (let i = 0; i < f32.length; i++) peak = Math.max(peak, Math.abs(f32[i]));
+  const g = peak > 0 && peak < 0.5 ? Math.min(8, 0.5 / peak) : 1, a = new Int16Array(f32.length);
+  for (let i = 0; i < f32.length; i++) a[i] = Math.max(-1, Math.min(1, f32[i] * g)) * 0x7fff;
+  return new Blob([wavHead(a.length), a], { type: "audio/wav" });
+}
+const wav16 = a => new Blob([wavHead(a.length), a], { type: "audio/wav" });
+const pcmOf = async c => new Int16Array((await c.blob.arrayBuffer()).slice(44));
 async function startNight() {
+  if (night) return;
+  if (testing) testStop();
   if (!(await micOpen())) return;
-  if (testing) { testing = false; clearTimeout(testT); $("testBtn").textContent = "🎙 시험해 보기"; }
   const now = new Date();
-  night = { id: "n" + now.getTime(), start: now.getTime(), end: 0, cfg: { ...CFG }, levels: {}, count: 0, secs: 0, peak: -120 };
+  night = { id: "n" + now.getTime(), start: now.getTime(), end: 0, cfg: { ...CFG }, levels: {}, count: 0, secs: 0, peak: -120, tags: [], memo: "" };
   await put("nights", { ...night }); ls.set("active", night.id);
-  const fl = Floor(); let ring = [], ringLen = 0, rec = null, quiet = 0, lastSave = 0, minuteKey = "";
+  const fl = Floor(); let ring = [], ringLen = 0, rec = null, quiet = 0, lastSave = 0;
+  flushRec = () => { if (!rec) return null; const r = rec; rec = null; $("nMeter").classList.remove("rec"); return finishClip(r); };
   onChunk = (y, db, sec) => {
     fl.feed(db); const thr = fl.v + CFG.sens, t = new Date();
-    const mk = hm(t); night.levels[mk] = Math.max(night.levels[mk] ?? -120, Math.round(db));   // 분마다 가장 큰 소리 (2차 그래프용)
+    const mk = hm(t); night.levels[mk] = Math.max(night.levels[mk] ?? -120, Math.round(db));   // 분마다 가장 큰 소리 (그래프용)
     $("nMeter").querySelector("i").style.width = pct(db) + "%";
     if (!rec) {
       ring.push(y); ringLen += y.length; while (ringLen - ring[0].length > PRE * SR) ringLen -= ring.shift().length;   // 앞 2초 보관
@@ -266,7 +371,7 @@ async function startNight() {
     } else {
       rec.parts.push(y); rec.len += y.length; rec.peak = Math.max(rec.peak, db); rec.sum += db; rec.n++;
       if (db > thr - 3) { quiet = 0; rec.loud += sec; } else quiet += sec;
-      if (quiet >= POST || rec.len / SR >= MAXLEN) { const r = rec; rec = null; $("nMeter").classList.remove("rec"); finishClip(r); }
+      if (quiet >= POST || rec.len / SR >= MAXLEN) flushRec();
     }
     if (Date.now() - lastSave > 60000) { lastSave = Date.now(); put("nights", { ...night }); }
   };
@@ -274,25 +379,26 @@ async function startNight() {
   nightShow(true);
 }
 async function finishClip(r) {
-  if (r.loud < MINLEN) return;                            // 똑딱 같은 아주 짧은 소리는 버림
+  const N = night; if (!N || r.loud < MINLEN) return;      // 똑딱 같은 아주 짧은 소리는 버림
   const f = new Float32Array(r.len); let o = 0; r.parts.forEach(p => { f.set(p, o); o += p.length; });
-  const clip = { id: "c" + r.start + Math.random().toString(36).slice(2, 6), night: night.id, start: Math.round(r.start), dur: r.len / SR, peak: Math.round(r.peak), avg: Math.round(r.n ? r.sum / r.n : r.peak), blob: wav(f) };
-  night.count++; night.secs += clip.dur; night.peak = Math.max(night.peak, clip.peak); if (!night.loudAt || clip.peak >= night.peak) night.loudAt = clip.start;
-  await put("clips", clip); await put("nights", { ...night });
-  $("nCount").textContent = `녹음 ${night.count}개 · ${durTxt(night.secs)}`;
+  const clip = { id: "c" + Math.round(r.start) + Math.random().toString(36).slice(2, 6), night: N.id, start: Math.round(r.start), dur: r.len / SR, peak: Math.round(r.peak), avg: Math.round(r.n ? r.sum / r.n : r.peak), blob: wav(f) };
+  N.count++; N.secs += clip.dur; if (clip.peak >= N.peak) N.loudAt = clip.start; N.peak = Math.max(N.peak, clip.peak);
+  await put("clips", clip); await put("nights", { ...N });
+  if (night === N) $("nCount").textContent = `녹음 ${N.count}개 · ${durTxt(N.secs)}`;
 }
 async function endNight() {
   if (!night) return;
+  onChunk = null; await flushRec?.(); flushRec = null;     // 녹음하던 조각도 저장하고 끝
   night.end = Date.now(); await put("nights", { ...night }); ls.set("active", null);
   micClose(); try { await wake?.release(); } catch (e) {} wake = null;
   const id = night.id, c = night.count; night = null; nightShow(false);
-  toast(c ? `☀️ 좋은 아침이에요 — 녹음 ${c}개를 남겼습니다` : "☀️ 좋은 아침이에요 — 녹음할 만한 소리가 없었습니다", 4000);
-  await renderNights(id);
+  toast(c ? `☀️ 좋은 아침이에요 — 녹음 ${c}개를 남겼습니다. 메모도 남겨 보세요` : "☀️ 좋은 아침이에요 — 녹음할 만한 소리가 없었습니다", 4000);
+  await renderNights(id); renderStorage();
 }
 let darkT = 0;
 function nightShow(on) {
   $("night").hidden = !on; $("night").classList.remove("dark"); clearTimeout(darkT);
-  if (on) { $("nCount").textContent = "녹음 0개"; darkT = setTimeout(() => $("night").classList.add("dark"), 15000); }
+  if (on) { $("nCount").textContent = "녹음 0개"; $("nClock").textContent = hm(new Date()); darkT = setTimeout(() => $("night").classList.add("dark"), 15000); }
 }
 $("night").addEventListener("click", e => { if (e.target.id === "nStop") return; $("night").classList.remove("dark"); clearTimeout(darkT); darkT = setTimeout(() => $("night").classList.add("dark"), 15000); });
 $("startBtn").onclick = startNight;
@@ -300,17 +406,14 @@ $("nStop").onclick = () => { if (confirm("녹음을 끝낼까요?")) endNight();
 setInterval(() => {
   if (!night) return;
   const t = new Date(); $("nClock").textContent = hm(t);
-  $("nState").innerHTML = inWindow(t) ? "🎙 듣는 중 — 소리가 나면 그 부분만 녹음합니다" : `😴 녹음 시간대(${CFG.from}~${CFG.to})가 아니라 쉬는 중입니다`;
+  $("nState").textContent = inWindow(t) ? "🎙 듣는 중 — 소리가 나면 그 부분만 녹음합니다" : `😴 녹음 시간대(${CFG.from}~${CFG.to})가 아니라 쉬는 중입니다`;
 }, 1000);
-document.addEventListener("visibilitychange", async () => {   // 화면으로 돌아오면 화면 켜짐 유지 다시
-  if (document.visibilityState === "visible" && night) { try { wake = await navigator.wakeLock?.request("screen"); } catch (e) {} if (ctx && ctx.state !== "running") ctx.resume().catch(() => {}); }
-});
 
 // ================= 😴 코골이 추정 =================
-// 녹음 조각을 0.1초씩 잘라 크기를 재고, 소리 덩어리(숨 한 번)를 찾음 → 2~8초 간격으로 일정하게 반복되면 코골이
+// 녹음 조각을 0.1초씩 잘라 크기를 재고, 소리 덩어리(숨 한 번)를 찾음 → 1.8~8초 간격으로 일정하게 반복되면 코골이
 async function analyze(c) {
   if (c.ver === 2) return c;
-  const a = new Int16Array((await c.blob.arrayBuffer()).slice(44)), F = SR / 10, env = [];
+  const a = await pcmOf(c), F = SR / 10, env = [];
   for (let i = 0; i + F <= a.length; i += F) { let s2 = 0; for (let k = i; k < i + F; k++) { const v = a[k] / 32768; s2 += v * v; } env.push(10 * Math.log10(s2 / F + 1e-12)); }
   const sorted = [...env].sort((x, y) => x - y), noise = sorted[Math.floor(sorted.length * 0.2)] ?? -80, top = sorted[sorted.length - 1] ?? -80;
   const thr = Math.max(noise + 8, top - 22), bursts = []; let st = -1, gap = 0;
@@ -335,49 +438,85 @@ function classifySeries(clips) {                           // 한 번씩만 녹�
   return clips;
 }
 const isSnore = c => c.k === "snore";
+const needStats = n => !n.stat || n.stat.v !== 2 || n.bytes == null;
 async function nightStats(n) {                             // 밤 하나의 요약 (기록 목록·7일 비교용, 결과는 밤 기록에 저장)
   const clips = classifySeries(await Promise.all((await clipsOf(n.id)).map(analyze)));
   const sn = clips.filter(isSnore);
   n.stat = { v: 2, snores: sn.reduce((t, c) => t + Math.max(1, c.bursts), 0), snoreSec: sn.reduce((t, c) => t + c.dur, 0), other: clips.length - sn.length };
-  put("nights", n).catch(() => {}); return clips;
+  n.bytes = clips.reduce((t, c) => t + (c.blob?.size || 0), 0);
+  await updNight(n.id, x => { x.stat = n.stat; x.bytes = n.bytes; }).catch(() => {}); return clips;
 }
 
+// ================= 🏷 메모 · 태그 =================
+const TAGS = [["drink", "🍺", "술"], ["side", "🛌", "옆으로"], ["pillow", "🧸", "베개 바꿈"], ["nose", "🤧", "코막힘"], ["tired", "😪", "피곤"], ["med", "💊", "약"]];
+const tagEm = n => (n.tags || []).map(t => TAGS.find(x => x[0] === t)?.[1] || "").join("");
+const tagTxt = n => (n.tags || []).map(t => { const x = TAGS.find(y => y[0] === t); return x ? x[1] + " " + x[2] : ""; }).filter(Boolean).join(", ");
+let memoT = 0, memoFlush = null;
+function renderMemo(n) {
+  if (memoT) { clearTimeout(memoT); memoFlush?.(); }       // 다른 밤을 열기 전에 쓰던 메모 저장
+  $("tags").innerHTML = TAGS.map(([k, e, t]) => `<button class="chip${(n.tags || []).includes(k) ? " on" : ""}" data-k="${k}">${e} ${t}</button>`).join("");
+  [...$("tags").children].forEach(b => b.onclick = async () => {
+    const k = b.dataset.k, on = !b.classList.contains("on"); b.classList.toggle("on", on);
+    await updNight(n.id, x => { x.tags = (x.tags || []).filter(y => y !== k); if (on) x.tags.push(k); });
+    memoSaved(); renderNights();
+  });
+  clearTimeout(memoT); $("memo").value = n.memo || ""; $("memoSaved").textContent = "";
+  memoFlush = saveMemo;
+  $("memo").oninput = () => { clearTimeout(memoT); $("memoSaved").textContent = "…"; memoT = setTimeout(saveMemo, 700); };
+  $("memo").onblur = () => { if (memoT) { clearTimeout(memoT); saveMemo(); } };
+  async function saveMemo() { memoT = 0; const v = $("memo").value.trim(); await updNight(n.id, x => { x.memo = v; }); memoSaved(); renderNights(); }
+}
+const memoSaved = () => { $("memoSaved").textContent = "✓ 저장됨"; };
+
 // ================= 📒 기록 보기 =================
-let curNight = null, playing = null;
+let curNight = null, playing = null, listSeq = 0;
 async function renderNights(openId) {
+  const seq = ++listSeq;
   const list = (await getAll("nights")).filter(n => n.end || n.id !== night?.id).sort((a, b) => b.start - a.start);
-  for (const n of list.slice(0, 30)) if (!n.stat || n.stat.v !== 2) await nightStats(n);   // 목록에 코골이 요약 (한 번 계산하면 저장)
+  for (const n of list.slice(0, 30)) if (needStats(n)) await nightStats(n);   // 목록에 코골이 요약 (한 번 계산하면 저장)
+  if (seq !== listSeq) return;                              // 그사이 더 새로 그리기 시작했으면 그만
   $("nightCount").textContent = list.length ? `${list.length}일` : "";
   const box = $("nights"); box.innerHTML = "";
   if (!list.length) box.innerHTML = '<div class="muted">아직 기록이 없습니다. 오늘 밤 <b>🌙 잠들기 시작</b>을 눌러 보세요.</div>';
   list.forEach(n => {
     const s = new Date(n.start), e = n.end ? new Date(n.end) : null, d = document.createElement("div"); d.className = "night-li" + (curNight === n.id ? " on" : "");
-    d.innerHTML = `<span class="d">${s.getMonth() + 1}월 ${s.getDate()}일 밤</span><span class="s">${hm(s)} ~ ${e ? hm(e) : "끝나지 않음"} · ${n.stat ? `😴 코골이 ${durTxt(n.stat.snoreSec)} · 기타 ${n.stat.other}개` : `녹음 ${n.count}개 · ${durTxt(n.secs || 0)}`}</span><span>›</span>`;
-    d.dataset.id = n.id; d.onclick = () => openNight(n.id); box.appendChild(d);
+    const sum = n.stat ? `😴 코골이 ${durTxt(n.stat.snoreSec)} · 기타 ${n.stat.other}개` : `녹음 ${n.count}개 · ${durTxt(n.secs || 0)}`;
+    d.innerHTML = `<button class="star${n.star ? " on" : ""}" title="${n.star ? "별표 빼기" : "★ 별표: 자동 정리에서 지우지 않음"}">${n.star ? "★" : "☆"}</button><span class="main"><span class="d">${s.getMonth() + 1}월 ${s.getDate()}일 밤</span><span class="tg">${tagEm(n)}</span><span class="s">${hm(s)} ~ ${e ? hm(e) + (n.cut ? " (중간에 멈춤)" : "") : "끝나지 않음"} · ${sum}${n.bytes ? " · " + bytesTxt(n.bytes) : ""}</span>${n.memo ? `<span class="memo">📝 ${esc(n.memo)}</span>` : ""}</span><span>›</span>`;
+    d.dataset.id = n.id; d.onclick = () => openNight(n.id);
+    d.querySelector(".star").onclick = async ev => { ev.stopPropagation(); let on; await updNight(n.id, x => { on = x.star = !x.star; }); toast(on ? "★ 별표 — 자동 정리해도 이 밤은 남겨 둡니다" : "별표를 뺐습니다"); renderNights(); if (curNight === n.id) renderInfo(await getNight(n.id)); };
+    box.appendChild(d);
   });
   if (openId) openNight(openId); else if (curNight && !list.some(n => n.id === curNight)) { curNight = null; $("detail").hidden = true; }
   renderWeek(list);
 }
-async function renderWeek(list) {                          // 📅 최근 7일 (밤마다 코골이 시간)
-  const last = list.slice(0, 7).reverse();
-  for (const n of last) if (!n.stat || n.stat.v !== 2) await nightStats(n);
+function renderWeek(list) {                                // 📅 최근 7일 (밤마다 코골이 시간)
+  const last = list.slice(0, 7).filter(n => n.stat).reverse();
   $("weekCard").hidden = last.length < 1; if (!last.length) return;
   const mx = Math.max(60, ...last.map(n => n.stat.snoreSec));
-  $("week").innerHTML = last.map(n => { const d = new Date(n.start); return `<div title="${d.getMonth() + 1}/${d.getDate()} 코골이 ${durTxt(n.stat.snoreSec)}"><em>${n.stat.snoreSec >= 60 ? Math.round(n.stat.snoreSec / 60) + "분" : Math.round(n.stat.snoreSec) + "초"}</em><b style="height:${Math.round(4 + 80 * n.stat.snoreSec / mx)}%"></b>${d.getMonth() + 1}/${d.getDate()}</div>`; }).join("");
+  const tip = n => `${md(new Date(n.start))} 코골이 ${durTxt(n.stat.snoreSec)}${n.tags?.length ? " · " + tagTxt(n) : ""}${n.memo ? " · 📝 " + n.memo : ""}`;
+  $("week").innerHTML = last.map(n => `<div data-id="${n.id}" class="${curNight === n.id ? "on" : ""}" title="${esc(tip(n))}"><em>${n.stat.snoreSec >= 60 ? Math.round(n.stat.snoreSec / 60) + "분" : Math.round(n.stat.snoreSec) + "초"}</em><b style="height:${Math.round(4 + 70 * n.stat.snoreSec / mx)}%"></b><s>${tagEm(n).slice(0, 6)}</s>${md(new Date(n.start))}</div>`).join("");
   const avg = last.reduce((t, n) => t + n.stat.snoreSec, 0) / last.length, best = last.reduce((a, n) => (n.stat.snoreSec < a.stat.snoreSec ? n : a));
-  $("weekInfo").textContent = last.length >= 2 ? `평균 ${durTxt(avg)} · 가장 조용했던 밤 ${new Date(best.start).getMonth() + 1}/${new Date(best.start).getDate()}` : "밤 기록이 쌓이면 날짜별로 비교해 보여 드립니다.";
+  const base = last.length >= 2 ? `평균 ${durTxt(avg)} · 가장 조용했던 밤 ${md(new Date(best.start))}${best.tags?.length ? " (" + tagTxt(best) + ")" : ""}` : "밤 기록이 쌓이면 날짜별로 비교해 보여 드립니다.";
+  $("weekInfo").textContent = base + " · 막대를 누르면 그 밤의 메모가 보입니다";
+  [...$("week").children].forEach(el => el.onclick = () => { const n = last.find(x => x.id === el.dataset.id); $("weekInfo").textContent = tip(n); openNight(n.id); });
 }
+function renderInfo(n) {
+  if (!n) return;
+  $("nInfo").textContent = `${new Date(n.start).getMonth() + 1}월 ${new Date(n.start).getDate()}일 ${hm(new Date(n.start))} ~ ${n.end ? hm(new Date(n.end)) : "끝나지 않음"}${n.cut ? " (중간에 멈춤)" : ""} · 녹음 ${n.count || 0}개 · ${bytesTxt(n.bytes || 0)}${n.star ? " · ★ 보관" : ""}`;
+}
+let openSeq = 0;
 async function openNight(id) {
-  curNight = id; stopPlay();
-  const n = (await getAll("nights")).find(x => x.id === id); if (!n) return;
-  [...$("nights").children].forEach(el => el.classList.remove("on"));
+  const seq = ++openSeq; curNight = id; stopPlay();
+  const n = await getNight(id); if (!n) return;
+  [...$("nights").children].forEach(el => el.classList.toggle("on", el.dataset.id === id));
+  [...$("week").children].forEach(el => el.classList.toggle("on", el.dataset.id === id));
   $("detail").hidden = false; $("sum").innerHTML = '<div style="grid-column:1/-1" class="muted">분석 중…</div>';
   const clips = await nightStats(n);
+  if (seq !== openSeq) return;                              // 그사이 다른 밤을 눌렀으면 그만
   const loud = clips.reduce((a, c) => (!a || c.peak > a.peak ? c : a), null), sn = clips.filter(isSnore);
   const heavy = sn.length ? sn.reduce((a, c) => (c.peak > a.peak ? c : a)) : null;
   $("sum").innerHTML = `<div><b>${n.stat.snores}번</b><span>😴 코골이 추정</span></div><div><b>${durTxt(n.stat.snoreSec)}</b><span>코골이 시간</span></div><div><b>${n.stat.other}개</b><span>🔊 기타 소리</span></div><div><b>${heavy ? hm(new Date(heavy.start)) : loud ? hm(new Date(loud.start)) : "—"}</b><span>${heavy ? "가장 심한 코골이" : "가장 큰 소리"}</span></div>`;
-  drawGraph(n, clips);
-  const li = [...$("nights").children].find(el => el.dataset.id === id); if (li) li.querySelector(".s").textContent = `${hm(new Date(n.start))} ~ ${n.end ? hm(new Date(n.end)) : "끝나지 않음"} · 😴 코골이 ${durTxt(n.stat.snoreSec)} · 기타 ${n.stat.other}개`;
+  renderInfo(n); renderMemo(n); drawGraph(n, clips);
   const box = $("clips"); box.innerHTML = clips.length ? "" : '<div class="muted">이 밤에는 녹음된 소리가 없습니다.</div>';
   const maxP = Math.max(...clips.map(c => c.peak), -40), minP = Math.min(...clips.map(c => c.peak), -60);
   clips.forEach(c => {
@@ -386,11 +525,10 @@ async function openNight(id) {
     d.id = "clip-" + c.id;
     d.innerHTML = `<span class="t">${hms(new Date(c.start))}</span><span class="tag ${isSnore(c) ? "s" : "o"}">${isSnore(c) ? "😴 코골이" : "🔊 기타"}</span><span class="m"><span class="lv" style="width:${Math.round(w * 0.6)}px"></span>${durTxt(c.dur)} · 최대 ${c.peak}dB${isSnore(c) && c.period ? ` · ${c.period}초 간격` : ""}</span><button class="play" title="듣기">▶</button><button class="dl" title="내려받기">⬇</button><button class="rm" title="지우기">🗑</button>`;
     d.querySelector(".play").onclick = e => play(c, e.currentTarget);
-    d.querySelector(".dl").onclick = () => download(c.blob, `SnoreNote_${fname(new Date(c.start))}.wav`);
-    d.querySelector(".rm").onclick = async () => { if (!confirm("이 녹음을 지울까요?")) return; await del("clips", c.id); const nn = (await getAll("nights")).find(x => x.id === id); if (nn) { nn.count = Math.max(0, nn.count - 1); nn.secs = Math.max(0, (nn.secs || 0) - c.dur); nn.stat = null; await put("nights", nn); } renderNights(id); };
+    d.querySelector(".dl").onclick = async () => { const f = await audioFile([c], CFG.fmt, `SnoreNote_${fname(new Date(c.start))}`); download(f, f.name); };
+    d.querySelector(".rm").onclick = async () => { if (!confirm("이 녹음을 지울까요?")) return; await del("clips", c.id); await updNight(id, nn => { nn.count = Math.max(0, (nn.count || 0) - 1); nn.secs = Math.max(0, (nn.secs || 0) - c.dur); nn.stat = null; nn.bytes = null; }); renderNights(id); renderStorage(); };
     box.appendChild(d);
   });
-  [...$("nights").children].forEach(el => { if (el.querySelector(".d") && el.textContent.includes(hm(new Date(n.start)))) el.classList.add("on"); });
 }
 function drawGraph(n, clips) {                            // 📈 분마다 막대: 높이 = 그 분에 가장 큰 소리, 색 = 그 분의 녹음 종류
   const g = $("graph"), st = Math.floor(n.start / 60000), en = Math.max(st + 1, Math.ceil((n.end || Date.now()) / 60000)), mins = Math.min(en - st, 24 * 60);
@@ -406,40 +544,226 @@ function drawGraph(n, clips) {                            // 📈 분마다 막�
     const m = +e.target.dataset?.m; if (!m) return;
     const c = clips.reduce((a, x) => (Math.abs(x.start / 60000 - m) < Math.abs((a?.start ?? 1e15) / 60000 - m) ? x : a), null);
     if (!c || Math.abs(c.start / 60000 - m) > 10) { toast(`${hm(new Date(m * 60000))} 근처에는 녹음이 없습니다`); return; }
-    const el = $("clip-" + c.id); el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    const el = $("clip-" + c.id); if (!el) return; el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
   };
 }
-const fname = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
-function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 30000); }
+const fname = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;   // 파일 이름은 영문·숫자만 (아이폰→Windows 한글 깨짐 방지)
+function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000); }
 function stopPlay() { if (playing) { playing.a.pause(); URL.revokeObjectURL(playing.a.src); playing.b.classList.remove("on"); playing.b.textContent = "▶"; playing = null; } }
 function play(c, btn) {
   if (playing && playing.b === btn) { stopPlay(); return; }
   stopPlay(); const a = new Audio(URL.createObjectURL(c.blob)); playing = { a, b: btn }; btn.classList.add("on"); btn.textContent = "■";
   a.onended = stopPlay; a.play().catch(e => { if (e.name === "AbortError" || playing?.a !== a) return; stopPlay(); toast("재생하지 못했습니다"); });
 }
-$("dlAll").onclick = async () => {                        // 한 밤의 조각을 이어 붙여 WAV 하나로 (조각 사이 0.5초 쉼)
+
+// ================= 🎵 MP3 · 파일 만들기 =================
+const LAME_URL = "https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js";
+let lameP = null;
+function loadLame() {                                     // MP3 변환 도구는 처음 쓸 때만 불러옴 (못 불러오면 WAV 로)
+  if (window.lamejs?.Mp3Encoder) return Promise.resolve(window.lamejs);
+  return lameP || (lameP = new Promise(ok => {
+    const s = document.createElement("script"); let done = false; const fin = v => { if (done) return; done = true; if (!v) { lameP = null; s.remove(); } ok(v); };
+    s.src = LAME_URL; s.async = true; s.crossOrigin = "anonymous";
+    s.onload = () => fin(window.lamejs?.Mp3Encoder ? window.lamejs : null); s.onerror = () => fin(null);
+    setTimeout(() => fin(null), 15000); document.head.appendChild(s);
+  }));
+}
+async function encodeMp3(pcm, kbps = 40) {                // 16kHz 한 채널 → MP3 (40kbps ≈ 1분 300KB)
+  const L = await loadLame(); if (!L) return null;
+  const enc = new L.Mp3Encoder(1, SR, kbps), out = [], B = 1152;
+  for (let i = 0, k = 0; i < pcm.length; i += B, k++) {
+    const m = enc.encodeBuffer(pcm.subarray(i, i + B)); if (m.length) out.push(new Uint8Array(m.buffer, m.byteOffset, m.length).slice());
+    if (k % 400 === 399) await wait(0);                     // 긴 파일도 화면이 멈추지 않게
+  }
+  const e = enc.flush(); if (e.length) out.push(new Uint8Array(e.buffer, e.byteOffset, e.length).slice());
+  return new Blob(out, { type: "audio/mpeg" });
+}
+async function joinPcm(clips) {                           // 조각들을 0.5초 쉼을 두고 이어 붙임
+  const parts = []; for (const c of clips) parts.push(await pcmOf(c), new Int16Array(SR / 2));
+  const all = new Int16Array(parts.reduce((s, p) => s + p.length, 0)); let o = 0; parts.forEach(p => { all.set(p, o); o += p.length; }); return all;
+}
+let mp3Warned = false;
+async function audioFile(clips, fmt, base) {               // → File (MP3 를 못 만들면 WAV)
+  if (fmt === "mp3") {
+    const pcm = clips.length === 1 ? await pcmOf(clips[0]) : await joinPcm(clips), b = await encodeMp3(pcm);
+    if (b) return new File([b], base + ".mp3", { type: "audio/mpeg" });
+    if (!mp3Warned) { mp3Warned = true; toast("MP3 변환 도구를 불러오지 못해 WAV 로 만듭니다 (인터넷 연결 확인)", 4000); }
+  }
+  if (clips.length === 1) return new File([clips[0].blob], base + ".wav", { type: "audio/wav" });
+  return new File([wav16(await joinPcm(clips))], base + ".wav", { type: "audio/wav" });
+}
+const csvCell = v => { const s = String(v ?? ""); return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const csvBlob = rows => new Blob(["﻿" + rows.map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n"], { type: "text/csv;charset=utf-8" });
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const nightRow = n => { const s = new Date(n.start); return [ymd(s), hm(s), n.end ? hm(new Date(n.end)) : "", n.count || 0, n.stat?.snores ?? "", n.stat ? Math.round(n.stat.snoreSec) : "", n.stat?.other ?? "", tagTxt(n), n.memo || "", n.star ? "★" : "", ((n.bytes || 0) / 1e6).toFixed(1)]; };
+const NIGHT_HEAD = ["날짜", "시작", "끝", "녹음 수", "코골이 추정(번)", "코골이 시간(초)", "기타 소리(개)", "태그", "메모", "별표", "크기(MB)"];
+function nightCsv(n, clips, ext) {
+  const rows = [["코골이 노트 — 밤 기록 요약 (참고용, 의료 검사 아님)"], NIGHT_HEAD, nightRow(n), [], ["시각", "길이(초)", "최대(dB)", "종류", "간격(초)", "파일 이름"]];
+  clips.forEach(c => rows.push([hms(new Date(c.start)), c.dur.toFixed(1), c.peak, isSnore(c) ? "코골이 추정" : "기타 소리", isSnore(c) && c.period ? c.period : "", `SnoreNote_${fname(new Date(c.start))}.${ext || CFG.fmt}`]));
+  return new File([csvBlob(rows)], `SnoreNote_${fname(new Date(n.start)).slice(0, 8)}_summary.csv`, { type: "text/csv" });
+}
+$("dlAll").onclick = async () => {                        // 한 밤의 조각을 이어 붙여 파일 하나로 (조각 사이 0.5초 쉼)
   const clips = await clipsOf(curNight); if (!clips.length) { toast("내려받을 녹음이 없습니다"); return; }
-  const parts = [];
-  for (const c of clips) { const buf = new Int16Array((await c.blob.arrayBuffer()).slice(44)); const f = new Float32Array(buf.length); for (let i = 0; i < buf.length; i++) f[i] = buf[i] / 0x7fff; parts.push(f, new Float32Array(SR / 2)); }
-  const all = new Float32Array(parts.reduce((s, p) => s + p.length, 0)); let o = 0; parts.forEach(p => { all.set(p, o); o += p.length; });
-  download(wav(all), `SnoreNote_${fname(new Date(clips[0].start))}_all.wav`); toast(`녹음 ${clips.length}개를 파일 하나로 내려받았습니다`);
+  toast("파일 만드는 중…", 20000);
+  const f = await audioFile(clips, CFG.fmt, `SnoreNote_${fname(new Date(clips[0].start))}_all`);
+  download(f, f.name); toast(`녹음 ${clips.length}개를 파일 하나로 내려받았습니다 (${bytesTxt(f.size)})`);
+};
+$("csvNight").onclick = async () => { const n = await getNight(curNight); if (!n) return; const clips = await nightStats(n); const f = nightCsv(n, clips); download(f, f.name); toast("표(CSV)를 내려받았습니다 — 엑셀에서 열 수 있어요"); };
+$("csvAll").onclick = async () => {
+  const list = (await getAll("nights")).filter(n => n.end || n.id !== night?.id).sort((a, b) => a.start - b.start); if (!list.length) { toast("아직 기록이 없습니다"); return; }
+  for (const n of list) if (needStats(n)) await nightStats(n);
+  download(csvBlob([NIGHT_HEAD, ...list.map(nightRow)]), `SnoreNote_all_nights_${fname(new Date()).slice(0, 8)}.csv`); toast(`밤 ${list.length}개 요약을 내려받았습니다`);
 };
 $("delNight").onclick = async () => {
-  if (!confirm("이 밤의 기록과 녹음을 모두 지울까요? 되돌릴 수 없습니다.")) return;
-  for (const c of await clipsOf(curNight)) await del("clips", c.id);
-  await del("nights", curNight); curNight = null; $("detail").hidden = true; renderNights(); toast("지웠습니다");
+  const n = await getNight(curNight); if (!n) return;
+  if (!confirm(`${n.star ? "★ 별표한 밤입니다. " : ""}이 밤의 기록과 녹음을 모두 지울까요? 되돌릴 수 없습니다.`)) return;
+  stopPlay(); await delNightAll(curNight); curNight = null; $("detail").hidden = true; renderNights(); renderStorage(); toast("지웠습니다");
 };
+
+// ================= 📤 보내기 (공유) =================
+function modal(html) { $("mBody").innerHTML = html; $("modal").hidden = false; $("modal").querySelector(".box").scrollTop = 0; return $("mBody"); }
+const modalClose = () => { $("modal").hidden = true; $("mBody").innerHTML = ""; };
+$("mClose").onclick = modalClose;
+$("modal").addEventListener("click", e => { if (e.target.id === "modal") modalClose(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("modal").hidden) modalClose(); });
+const HINT_IOS = "🍎 <b>아이폰</b>: 📤 보내기 → 공유 창에서 <b>카카오톡</b>(나와의 채팅) · <b>OneDrive</b> · <b>메일</b> · <b>파일에 저장</b> 중 고르세요.";
+const HINT_AND = "🤖 <b>안드로이드</b>: 📤 보내기 → <b>Quick Share</b>(근처 공유) · <b>블루투스</b> · <b>카카오톡</b> 중 고르세요.";
+$("shareBtn").onclick = async () => {
+  const id = curNight, n = await getNight(id); if (!n) return;
+  const sh = { pack: "one", what: "all", files: null };
+  const body = modal(`<h3>📤 이 밤 녹음 보내기</h3>
+    <div class="muted">${new Date(n.start).getMonth() + 1}월 ${new Date(n.start).getDate()}일 밤 · 소리 파일(${CFG.fmt === "mp3" ? "MP3" : "WAV"}) + 요약 표(CSV)</div>
+    <div class="row"><label>묶기</label><div class="seg" id="shPack"><button data-v="one">하나로 이어서</button><button data-v="each">조각마다 따로</button></div></div>
+    <div class="row"><label>소리</label><div class="seg" id="shWhat"><button data-v="all">모두</button><button data-v="snore">😴 코골이만</button></div></div>
+    <button class="big" id="shGo" disabled style="margin-top:6px">준비 중…</button>
+    <div class="muted" id="shInfo" style="margin-top:8px"></div>
+    <div class="hint${isIOS ? " me" : ""}">${HINT_IOS}</div><div class="hint${isAndroid ? " me" : ""}">${HINT_AND}</div>
+    <div class="hint">파일 이름은 영문(SnoreNote_…)이라 Windows 로 옮겨도 깨지지 않아요. 공유가 안 되는 브라우저에서는 내려받기로 대신합니다.</div>`);
+  const seg = (el, key) => { [...el.children].forEach(b => { b.classList.toggle("on", b.dataset.v === sh[key]); b.onclick = () => { sh[key] = b.dataset.v; seg(el, key); prep(); }; }); };
+  let prepSeq = 0;
+  async function prep() {
+    const s = ++prepSeq, go = body.querySelector("#shGo"); go.disabled = true; go.textContent = "파일 만드는 중…"; sh.files = null;
+    let clips = await nightStats(n); if (sh.what === "snore") clips = clips.filter(isSnore);
+    const files = [];
+    if (clips.length) {
+      if (sh.pack === "one") files.push(await audioFile(clips, CFG.fmt, `SnoreNote_${fname(new Date(clips[0].start))}_${sh.what === "snore" ? "snore" : "all"}`));
+      else for (const c of clips) { files.push(await audioFile([c], CFG.fmt, `SnoreNote_${fname(new Date(c.start))}`)); if (s !== prepSeq) return; }
+    }
+    const ext = files[0]?.name.split(".").pop(); files.push(nightCsv(n, clips, ext));
+    if (s !== prepSeq || $("modal").hidden) return;
+    sh.files = files; const size = files.reduce((t, f) => t + f.size, 0);
+    const can = !!(navigator.canShare && navigator.canShare({ files }));
+    go.disabled = false; go.textContent = can ? `📤 보내기 (파일 ${files.length}개 · ${bytesTxt(size)})` : `⬇ 내려받기 (파일 ${files.length}개 · ${bytesTxt(size)})`;
+    body.querySelector("#shInfo").textContent = (clips.length ? "" : "보낼 소리가 없어 표(CSV)만 보냅니다. ") + (can ? "" : "이 브라우저는 파일 공유를 못 해서 내려받기로 대신합니다.");
+  }
+  seg(body.querySelector("#shPack"), "pack"); seg(body.querySelector("#shWhat"), "what");
+  body.querySelector("#shGo").onclick = async () => {
+    const files = sh.files; if (!files) return;
+    if (navigator.canShare && navigator.canShare({ files })) {   // 준비를 먼저 끝내 두고, 누르는 순간 바로 공유 (아이폰은 이래야 열림)
+      try { await navigator.share({ files, title: "코골이 노트", text: `코골이 노트 ${new Date(n.start).getMonth() + 1}월 ${new Date(n.start).getDate()}일 밤 기록` }); toast("보냈습니다"); modalClose(); }
+      catch (e) { if (e.name !== "AbortError") toast("공유하지 못했습니다: " + e.message + " — 내려받기로 해 보세요", 4500); }
+      return;
+    }
+    for (const f of files) { download(f, f.name); await wait(500); }
+    toast(`파일 ${files.length}개를 내려받았습니다`); modalClose();
+  };
+  prep();
+};
+
+// ================= 💾 저장 공간 · 자동 정리 =================
+async function renderStorage() {
+  const list = await getAll("nights"), mine = list.reduce((t, n) => t + (n.bytes || 0), 0);
+  let txt = `녹음 ${bytesTxt(mine)} (밤 ${list.length}개, ★ ${list.filter(n => n.star).length}개)`, ratio = 0;
+  try { const e = await navigator.storage?.estimate?.(); if (e && e.quota) { ratio = e.usage / e.quota; txt += ` · 이 앱이 쓰는 공간 ${bytesTxt(e.usage)} / 쓸 수 있는 공간 약 ${bytesTxt(e.quota)}`; } } catch (e) {}
+  txt += ` · 하룻밤 보통 수 MB${CFG.keep ? ` · 자동 정리: ${CFG.keep}일 지나면 지움` : ""}`;
+  $("stoTxt").textContent = txt; $("stoBar").querySelector("i").style.width = Math.max(1, Math.min(100, ratio * 100)) + "%";
+}
+async function cleanupList() {
+  if (!CFG.keep) return [];
+  const lim = Date.now() - CFG.keep * 864e5, act = night?.id || ls.get("active", null);
+  return (await getAll("nights")).filter(n => !n.star && n.id !== act && n.start < lim);
+}
+async function cleanup() { const old = await cleanupList(); for (const n of old) await delNightAll(n.id); return old.length; }
+
+// ================= 🔒 잠금 (간단한 가림 화면) =================
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+async function hashPin(pin, salt) { return hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode("snore-note:" + salt + ":" + pin))); }
+let lk = null;                                            // { mode, buf, first, fails, until, cancel, done }
+function lockShow(mode, cancel = false) {
+  return new Promise(done => {
+    lk = { mode, buf: "", first: "", fails: 0, until: 0, cancel, done };
+    $("lock").hidden = false; $("lkCancel").hidden = !cancel; $("lkForgot").hidden = mode !== "unlock" || cancel;
+    lockMsg(mode === "unlock" ? "PIN 4자리를 눌러 주세요" : "새 PIN 4자리를 눌러 주세요"); lockDots();
+  });
+}
+const lockMsg = (t, bad) => { $("lkMsg").textContent = t; $("lkMsg").classList.toggle("bad", !!bad); };
+const lockDots = () => [...$("lkDots").children].forEach((d, i) => d.classList.toggle("f", i < (lk?.buf.length || 0)));
+function lockEnd(v) { const d = lk?.done; lk = null; $("lock").hidden = true; d && d(v); }
+const lockShake = () => { const d = $("lkDots"); d.classList.remove("shake"); void d.offsetWidth; d.classList.add("shake"); };
+$("lkPad").innerHTML = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"].map(k => `<button data-k="${k}" ${k === "⌫" ? 'title="지우기"' : ""}>${k}</button>`).join("");
+[...$("lkPad").children].forEach(b => b.onclick = () => lockKey(b.dataset.k));
+document.addEventListener("keydown", e => { if (!lk) return; if (/^[0-9]$/.test(e.key)) lockKey(e.key); else if (e.key === "Backspace") lockKey("⌫"); });
+async function lockKey(k) {
+  if (!lk || !k) return;
+  if (lk.until > Date.now()) { lockMsg(`잠시 뒤에 다시 눌러 주세요 (${Math.ceil((lk.until - Date.now()) / 1000)}초)`, true); return; }
+  if (k === "⌫") { lk.buf = lk.buf.slice(0, -1); lockDots(); return; }
+  if (lk.buf.length >= 4) return;
+  lk.buf += k; lockDots(); if (lk.buf.length < 4) return;
+  const pin = lk.buf, L = lk; L.buf = ""; setTimeout(lockDots, 150);   // 바로 비워서 빨리 눌러도 숫자가 빠지지 않게
+  if (L.mode === "unlock") {
+    const p = ls.get("pin", null);
+    if (!p || (await hashPin(pin, p.s)) === p.h) { lockEnd(true); return; }
+    L.fails++; lockShake();
+    if (L.fails % 5 === 0) { L.until = Date.now() + 30000; lockMsg("5번 틀렸습니다. 30초 뒤에 다시 해 보세요", true); } else lockMsg(`PIN이 맞지 않습니다 (${L.fails}번 틀림)`, true);
+  } else if (L.mode === "set1") { L.first = pin; L.mode = "set2"; lockMsg("확인을 위해 한 번 더 눌러 주세요"); }
+  else if (L.first === pin) {
+    const s = hex(crypto.getRandomValues(new Uint8Array(16))); ls.set("pin", { s, h: await hashPin(pin, s) }); lockEnd(true);
+  } else { L.mode = "set1"; L.first = ""; lockShake(); lockMsg("두 번 누른 PIN이 달라요. 처음부터 다시 눌러 주세요", true); }
+}
+$("lkCancel").onclick = () => lockEnd(false);
+$("lkForgot").onclick = async () => {
+  if (!confirm("PIN을 잊으셨나요? 모든 밤 기록과 녹음을 지우고 잠금을 풉니다. 되돌릴 수 없습니다.")) return;
+  if (!confirm("정말 모두 지울까요? (마지막 확인)")) return;
+  await wipeAll(); ls.set("pin", null); renderCfg(); lockEnd(true); toast("모든 기록을 지우고 잠금을 풀었습니다", 4000);
+};
+async function wipeAll() { await tx("clips", "readwrite", s => s.clear()); await tx("nights", "readwrite", s => s.clear()); ls.set("active", null); curNight = null; $("detail").hidden = true; }
+$("pinBtn").onclick = async () => {
+  if (!crypto?.subtle) { toast("이 주소에서는 잠금을 쓸 수 없습니다 (https 필요)"); return; }
+  if (ls.get("pin", null)) {
+    if (!(await lockShow("unlock", true))) return;
+    ls.set("pin", null); renderCfg(); toast("잠금을 껐습니다"); return;
+  }
+  if (await lockShow("set1", true)) { renderCfg(); toast("🔒 잠금을 켰습니다 — 다음부터 앱을 열 때 PIN을 묻습니다", 4000); }
+};
+let hiddenAt = 0;
+document.addEventListener("visibilitychange", async () => {
+  if (document.visibilityState === "hidden") { hiddenAt = Date.now(); return; }
+  if (night) { try { wake = await navigator.wakeLock?.request("screen"); } catch (e) {} if (ctx && ctx.state !== "running") ctx.resume().catch(() => {}); return; }   // 화면으로 돌아오면 화면 켜짐 유지 다시
+  if (ls.get("pin", null) && !lk && hiddenAt && Date.now() - hiddenAt > 60000) { stopPlay(); modalClose(); lockShow("unlock"); }   // 1분 넘게 다른 데 갔다 오면 다시 잠금
+});
+
+// ================= ❓ 도움말 =================
+$("helpBtn").onclick = () => modal(`<h3>❓ 코골이 노트 도움말</h3>
+  <h4>🌙 쓰는 법</h4><ol><li>휴대폰을 충전기에 꽂고 머리맡 50cm~1m 거리에 둡니다.</li><li>🎙 <b>시험해 보기</b>로 코골이 소리에 막대가 하얀 선을 넘는지 봅니다. 안 넘으면 민감도를 <b>작은 소리도</b>로.</li><li>🌙 <b>잠들기 시작</b>을 누르고 화면을 켜 둔 채 잡니다 (화면은 어둡게 바뀝니다).</li><li>아침에 ☀️ <b>일어났어요</b>를 누르면 아래 <b>📒 밤사이 기록</b>에 정리됩니다.</li></ol>
+  <h4>😴 코골이 추정이란?</h4><p>소리가 1.8~8초 간격으로 일정하게 되풀이되면 코골이로, 그 밖의 소리(말소리·뒤척임·쿵)는 <b>기타</b>로 나눕니다. 짐작일 뿐이니 직접 들어 확인하세요. 그래프 막대를 누르면 그 시각 녹음으로 갑니다.</p>
+  <h4>📝 메모·태그</h4><p>밤을 열고 🍺 술 · 🛌 옆으로 · 🧸 베개 바꿈 등을 눌러 두면, 목록과 📅 7일 그래프에 표시되어 어떤 날 코골이가 줄었는지 비교하기 좋습니다.</p>
+  <h4>⬇ 내려받기 · 📤 보내기</h4><p><b>MP3</b>는 WAV보다 약 8분의 1 크기라 카톡·메일로 보내기 좋습니다. <b>📤 보내기</b>는 소리 파일과 요약 표(CSV)를 함께 공유합니다. 표는 엑셀에서 열립니다.</p>
+  <h4>💾 저장 공간</h4><p>녹음은 이 휴대폰(브라우저) 안에만 있습니다. 하룻밤 보통 수 MB입니다. <b>자동 정리</b>를 켜면 오래된 밤을 지우고, <b>★ 별표</b>한 밤은 남깁니다. 브라우저 데이터(방문 기록·사이트 데이터)를 지우면 녹음도 사라지니, 남길 녹음은 내려받아 두세요.</p>
+  <h4>🔒 잠금</h4><p>앱을 열 때 PIN 4자리를 묻는 간단한 가림 화면입니다. 녹음을 암호화하지는 않습니다. PIN을 잊으면 모든 기록을 지우고 다시 시작해야 합니다.</p>
+  <h4>⚠️ 알아 두세요</h4><ul><li>아이폰은 화면을 잠그거나 다른 앱으로 가면 녹음이 멈춥니다. 다음에 열면 그때까지의 녹음이 남아 있습니다.</li><li>홈 화면에 추가해 두면 앱처럼 열리고 인터넷 없이도 켜집니다 (MP3 변환은 인터넷이 필요할 수 있습니다).</li><li>참고용 기록이며 의료 검사가 아닙니다. 숨이 멎는 듯한 소리가 잦으면 병원(수면 클리닉)에 문의하세요.</li></ul>`);
 
 // ================= 시작 =================
 (async () => {
   const act = ls.get("active", null);                     // 앱이 밤사이 꺼졌던 경우: 그 밤을 마무리
-  if (act) { const n = (await getAll("nights")).find(x => x.id === act); if (n && !n.end) { n.end = Date.now(); n.cut = true; await put("nights", n); toast("지난밤 녹음이 중간에 멈췄습니다 (화면이 꺼졌거나 앱이 닫힘). 남은 녹음은 아래에 있습니다.", 6000); } ls.set("active", null); }
-  renderNights();
+  if (act) { const n = await getNight(act); if (n && !n.end) { n.end = Math.max(n.start + 1000, Date.now()); n.cut = true; await put("nights", n); setTimeout(() => toast("지난밤 녹음이 중간에 멈췄습니다 (화면이 꺼졌거나 앱이 닫힘). 그때까지의 녹음은 아래에 있습니다.", 6000), 300); } ls.set("active", null); }
+  if (ls.get("pin", null)) await lockShow("unlock");      // 잠금을 켰으면 목록을 보여 주기 전에 PIN
+  try { const k = await cleanup(); if (k) toast(`자동 정리: ${CFG.keep}일 지난 밤 ${k}개를 지웠습니다 (★ 별표한 밤은 남김)`, 4500); } catch (e) {}
+  await renderNights(); renderStorage();
 })();
 if (!navigator.mediaDevices?.getUserMedia) { $("startBtn").disabled = true; $("startBtn").textContent = "이 브라우저는 마이크를 쓸 수 없습니다"; }
 else if (!window.isSecureContext) toast("마이크는 https 주소에서만 켜집니다", 5000);
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => {});
-window.__sn = { db, getAll, clipsOf, get night() { return night; }, endNight };   // 시험용
+window.__sn = { db, getAll, clipsOf, getNight, updNight, get night() { return night; }, endNight, encodeMp3, loadLame, audioFile, nightCsv, cleanup, cleanupList, hashPin, wipeAll, renderNights, renderStorage, openNight, CFG, get cur() { return curNight; } };   // 시험용
 })();
 </script>
 </body>
