@@ -43,13 +43,23 @@
   .night-li { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; background: #0f1528; border: 1px solid var(--line); cursor: pointer; }
   .night-li:hover, .night-li.on { border-color: var(--accent); }
   .night-li .d { font-weight: 700; } .night-li .s { color: var(--dim); font-size: 13px; flex: 1; }
-  .sum { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .sum { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
   .sum div { background: #0f1528; border-radius: 12px; padding: 10px; text-align: center; } .sum b { display: block; font-size: 20px; } .sum span { font-size: 12px; color: var(--dim); }
   .clip { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: #0f1528; margin-bottom: 6px; }
   .clip .t { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 66px; } .clip .m { flex: 1; color: var(--dim); font-size: 13px; }
   .clip .lv { display: inline-block; height: 8px; border-radius: 4px; background: var(--warm); vertical-align: middle; margin-right: 6px; }
+  .clip { flex-wrap: wrap; } .clip .m { min-width: 140px; }
   .clip button { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: #1a2340; cursor: pointer; font-size: 16px; }
   .clip button.play.on { background: var(--accent2); border-color: var(--accent2); }
+  .graph { display: flex; align-items: flex-end; gap: 1px; height: 110px; padding: 6px 0 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .graph i { flex: 1; min-width: 1px; max-width: 28px; background: #2a3354; border-radius: 2px 2px 0 0; }
+  .graph i.o { background: #6d7ff7; } .graph i.s { background: var(--warm); } .graph i:hover { outline: 1px solid #fff; }
+  .gx { display: flex; justify-content: space-between; color: var(--dim); font-size: 11px; margin: 4px 0 4px; }
+  .legend { display: flex; gap: 12px; font-size: 12px; color: var(--dim); margin-bottom: 12px; flex-wrap: wrap; } .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; background: var(--c); }
+  .week { display: flex; align-items: flex-end; gap: 8px; height: 120px; } .week div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; font-size: 11px; color: var(--dim); }
+  .week b { width: 100%; max-width: 46px; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, #fbbf77, #f59e0b); min-height: 3px; } .week em { font-style: normal; color: var(--ink); font-size: 12px; font-weight: 700; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; white-space: nowrap; } .tag.s { background: #fbbf7722; color: var(--warm); } .tag.o { background: #6d7ff722; color: #aab4ff; }
+  .clip.flash { animation: fl 1.2s ease 2; } @keyframes fl { 50% { background: #2a3354; } }
   .foot { text-align: center; color: var(--dim); font-size: 12px; margin-top: 24px; }
   /* 밤 화면 */
   #night { position: fixed; inset: 0; z-index: 50; background: #000; color: #9aa3c7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; }
@@ -63,7 +73,7 @@
   #night .dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity 1s; } #night.dark .dim { opacity: .75; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: #1f2747; color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 14px; opacity: 0; transition: .25s; z-index: 99; max-width: 92vw; text-align: center; pointer-events: none; }
   .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
-  @media (max-width: 480px) { .sum b { font-size: 17px; } .row > label { min-width: 100%; } }
+  @media (max-width: 480px) { .sum { grid-template-columns: repeat(2, 1fr); } .sum b { font-size: 17px; } .row > label { min-width: 100%; } }
 </style>
 </head>
 <body>
@@ -96,11 +106,20 @@
     🔒 녹음은 <b>이 휴대폰 안에만</b> 저장되고 인터넷으로 보내지 않습니다.
   </div>
 
+  <section class="card" id="weekCard" hidden>
+    <h2>📅 최근 7일 코골이</h2>
+    <div class="week" id="week"></div>
+    <div class="muted" id="weekInfo" style="margin-top:8px"></div>
+  </section>
+
   <section class="card">
     <h2>📒 밤사이 기록 <span class="muted" id="nightCount" style="font-weight:400"></span></h2>
     <div class="nights" id="nights"></div>
     <div id="detail" hidden style="margin-top:14px">
       <div class="sum" id="sum"></div>
+      <div class="graph" id="graph" title="막대를 누르면 그 시각의 녹음으로 갑니다"></div>
+      <div class="gx" id="gx"></div>
+      <div class="legend"><span style="--c:var(--warm)">코골이 추정</span><span style="--c:#6d7ff7">기타 소리</span><span style="--c:#2a3354">녹음 안 함 (분마다 가장 큰 소리)</span></div>
       <div class="row" style="margin-top:0"><button class="btn" id="dlAll">⬇ 이 밤 녹음 모두 내려받기</button><button class="btn" id="delNight" style="color:var(--red)">🗑 이 밤 기록 지우기</button></div>
       <div id="clips"></div>
     </div>
@@ -219,7 +238,7 @@ $("testBtn").onclick = async () => {
 };
 
 // ================= 🌙 밤 녹음 =================
-const PRE = 2, POST = 3, MAXLEN = 60, MINLEN = 0.4, MAXCLIPS = 400;
+const PRE = 2, POST = 5, MAXLEN = 90, MINLEN = 0.4, MAXCLIPS = 400;
 let night = null, wake = null;
 function wav(f32) {                                       // 16bit WAV
   const b = new ArrayBuffer(44 + f32.length * 2), v = new DataView(b), w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
@@ -287,40 +306,108 @@ document.addEventListener("visibilitychange", async () => {   // 화면으로 �
   if (document.visibilityState === "visible" && night) { try { wake = await navigator.wakeLock?.request("screen"); } catch (e) {} if (ctx && ctx.state !== "running") ctx.resume().catch(() => {}); }
 });
 
+// ================= 😴 코골이 추정 =================
+// 녹음 조각을 0.1초씩 잘라 크기를 재고, 소리 덩어리(숨 한 번)를 찾음 → 2~8초 간격으로 일정하게 반복되면 코골이
+async function analyze(c) {
+  if (c.ver === 2) return c;
+  const a = new Int16Array((await c.blob.arrayBuffer()).slice(44)), F = SR / 10, env = [];
+  for (let i = 0; i + F <= a.length; i += F) { let s2 = 0; for (let k = i; k < i + F; k++) { const v = a[k] / 32768; s2 += v * v; } env.push(10 * Math.log10(s2 / F + 1e-12)); }
+  const sorted = [...env].sort((x, y) => x - y), noise = sorted[Math.floor(sorted.length * 0.2)] ?? -80, top = sorted[sorted.length - 1] ?? -80;
+  const thr = Math.max(noise + 8, top - 22), bursts = []; let st = -1, gap = 0;
+  env.forEach((d, i) => {
+    if (d > thr) { if (st < 0) st = i; gap = 0; }
+    else if (st >= 0 && ++gap > 2) { const len = i - gap + 1 - st; if (len >= 3 && len <= 40) bursts.push([st / 10, len / 10]); st = -1; gap = 0; }
+  });
+  if (st >= 0) { const len = env.length - st; if (len >= 3 && len <= 40) bursts.push([st / 10, len / 10]); }
+  const iv = bursts.slice(1).map((b, i) => b[0] - bursts[i][0]), mean = iv.reduce((x, y) => x + y, 0) / (iv.length || 1);
+  const cv = iv.length ? Math.sqrt(iv.reduce((x, y) => x + (y - mean) ** 2, 0) / iv.length) / mean : 9;
+  c.bursts = bursts.length; c.period = iv.length ? Math.round(mean * 10) / 10 : 0;
+  c.kind = bursts.length >= 3 && mean >= 1.8 && mean <= 8 && cv < 0.45 ? "snore" : "other";
+  c.ver = 2; put("clips", c).catch(() => {}); return c;
+}
+function classifySeries(clips) {                           // 한 번씩만 녹음됐어도 일정 간격으로 이어진 조각들이면 코골이로
+  for (let i = 0; i < clips.length; i++) {
+    const c = clips[i]; if (c.kind === "snore" || c.bursts > 2 || !c.bursts) continue;
+    const near = clips.filter(o => o !== c && Math.abs(o.start - c.start) < 20000 && o.bursts >= 1 && o.bursts <= 2);
+    if (near.length >= 2) c.kindS = "snore";
+  }
+  clips.forEach(c => { c.k = c.kindS || c.kind; });
+  return clips;
+}
+const isSnore = c => c.k === "snore";
+async function nightStats(n) {                             // 밤 하나의 요약 (기록 목록·7일 비교용, 결과는 밤 기록에 저장)
+  const clips = classifySeries(await Promise.all((await clipsOf(n.id)).map(analyze)));
+  const sn = clips.filter(isSnore);
+  n.stat = { v: 2, snores: sn.reduce((t, c) => t + Math.max(1, c.bursts), 0), snoreSec: sn.reduce((t, c) => t + c.dur, 0), other: clips.length - sn.length };
+  put("nights", n).catch(() => {}); return clips;
+}
+
 // ================= 📒 기록 보기 =================
 let curNight = null, playing = null;
 async function renderNights(openId) {
   const list = (await getAll("nights")).filter(n => n.end || n.id !== night?.id).sort((a, b) => b.start - a.start);
+  for (const n of list.slice(0, 30)) if (!n.stat || n.stat.v !== 2) await nightStats(n);   // 목록에 코골이 요약 (한 번 계산하면 저장)
   $("nightCount").textContent = list.length ? `${list.length}일` : "";
   const box = $("nights"); box.innerHTML = "";
   if (!list.length) box.innerHTML = '<div class="muted">아직 기록이 없습니다. 오늘 밤 <b>🌙 잠들기 시작</b>을 눌러 보세요.</div>';
   list.forEach(n => {
     const s = new Date(n.start), e = n.end ? new Date(n.end) : null, d = document.createElement("div"); d.className = "night-li" + (curNight === n.id ? " on" : "");
-    d.innerHTML = `<span class="d">${s.getMonth() + 1}월 ${s.getDate()}일 밤</span><span class="s">${hm(s)} ~ ${e ? hm(e) : "끝나지 않음"} · 녹음 ${n.count}개 · ${durTxt(n.secs || 0)}</span><span>›</span>`;
-    d.onclick = () => openNight(n.id); box.appendChild(d);
+    d.innerHTML = `<span class="d">${s.getMonth() + 1}월 ${s.getDate()}일 밤</span><span class="s">${hm(s)} ~ ${e ? hm(e) : "끝나지 않음"} · ${n.stat ? `😴 코골이 ${durTxt(n.stat.snoreSec)} · 기타 ${n.stat.other}개` : `녹음 ${n.count}개 · ${durTxt(n.secs || 0)}`}</span><span>›</span>`;
+    d.dataset.id = n.id; d.onclick = () => openNight(n.id); box.appendChild(d);
   });
   if (openId) openNight(openId); else if (curNight && !list.some(n => n.id === curNight)) { curNight = null; $("detail").hidden = true; }
+  renderWeek(list);
+}
+async function renderWeek(list) {                          // 📅 최근 7일 (밤마다 코골이 시간)
+  const last = list.slice(0, 7).reverse();
+  for (const n of last) if (!n.stat || n.stat.v !== 2) await nightStats(n);
+  $("weekCard").hidden = last.length < 1; if (!last.length) return;
+  const mx = Math.max(60, ...last.map(n => n.stat.snoreSec));
+  $("week").innerHTML = last.map(n => { const d = new Date(n.start); return `<div title="${d.getMonth() + 1}/${d.getDate()} 코골이 ${durTxt(n.stat.snoreSec)}"><em>${n.stat.snoreSec >= 60 ? Math.round(n.stat.snoreSec / 60) + "분" : Math.round(n.stat.snoreSec) + "초"}</em><b style="height:${Math.round(4 + 80 * n.stat.snoreSec / mx)}%"></b>${d.getMonth() + 1}/${d.getDate()}</div>`; }).join("");
+  const avg = last.reduce((t, n) => t + n.stat.snoreSec, 0) / last.length, best = last.reduce((a, n) => (n.stat.snoreSec < a.stat.snoreSec ? n : a));
+  $("weekInfo").textContent = last.length >= 2 ? `평균 ${durTxt(avg)} · 가장 조용했던 밤 ${new Date(best.start).getMonth() + 1}/${new Date(best.start).getDate()}` : "밤 기록이 쌓이면 날짜별로 비교해 보여 드립니다.";
 }
 async function openNight(id) {
   curNight = id; stopPlay();
   const n = (await getAll("nights")).find(x => x.id === id); if (!n) return;
   [...$("nights").children].forEach(el => el.classList.remove("on"));
-  const clips = await clipsOf(id);
-  $("detail").hidden = false;
-  const loud = clips.reduce((a, c) => (!a || c.peak > a.peak ? c : a), null);
-  $("sum").innerHTML = `<div><b>${clips.length}개</b><span>녹음 조각</span></div><div><b>${durTxt(clips.reduce((s, c) => s + c.dur, 0))}</b><span>녹음 길이</span></div><div><b>${loud ? hm(new Date(loud.start)) : "—"}</b><span>가장 큰 소리</span></div>`;
+  $("detail").hidden = false; $("sum").innerHTML = '<div style="grid-column:1/-1" class="muted">분석 중…</div>';
+  const clips = await nightStats(n);
+  const loud = clips.reduce((a, c) => (!a || c.peak > a.peak ? c : a), null), sn = clips.filter(isSnore);
+  const heavy = sn.length ? sn.reduce((a, c) => (c.peak > a.peak ? c : a)) : null;
+  $("sum").innerHTML = `<div><b>${n.stat.snores}번</b><span>😴 코골이 추정</span></div><div><b>${durTxt(n.stat.snoreSec)}</b><span>코골이 시간</span></div><div><b>${n.stat.other}개</b><span>🔊 기타 소리</span></div><div><b>${heavy ? hm(new Date(heavy.start)) : loud ? hm(new Date(loud.start)) : "—"}</b><span>${heavy ? "가장 심한 코골이" : "가장 큰 소리"}</span></div>`;
+  drawGraph(n, clips);
+  const li = [...$("nights").children].find(el => el.dataset.id === id); if (li) li.querySelector(".s").textContent = `${hm(new Date(n.start))} ~ ${n.end ? hm(new Date(n.end)) : "끝나지 않음"} · 😴 코골이 ${durTxt(n.stat.snoreSec)} · 기타 ${n.stat.other}개`;
   const box = $("clips"); box.innerHTML = clips.length ? "" : '<div class="muted">이 밤에는 녹음된 소리가 없습니다.</div>';
   const maxP = Math.max(...clips.map(c => c.peak), -40), minP = Math.min(...clips.map(c => c.peak), -60);
   clips.forEach(c => {
     const d = document.createElement("div"); d.className = "clip";
     const w = 20 + 80 * ((c.peak - minP) / Math.max(1, maxP - minP));
-    d.innerHTML = `<span class="t">${hms(new Date(c.start))}</span><span class="m"><span class="lv" style="width:${Math.round(w * 0.6)}px"></span>${durTxt(c.dur)} · 최대 ${c.peak}dB</span><button class="play" title="듣기">▶</button><button class="dl" title="내려받기">⬇</button><button class="rm" title="지우기">🗑</button>`;
+    d.id = "clip-" + c.id;
+    d.innerHTML = `<span class="t">${hms(new Date(c.start))}</span><span class="tag ${isSnore(c) ? "s" : "o"}">${isSnore(c) ? "😴 코골이" : "🔊 기타"}</span><span class="m"><span class="lv" style="width:${Math.round(w * 0.6)}px"></span>${durTxt(c.dur)} · 최대 ${c.peak}dB${isSnore(c) && c.period ? ` · ${c.period}초 간격` : ""}</span><button class="play" title="듣기">▶</button><button class="dl" title="내려받기">⬇</button><button class="rm" title="지우기">🗑</button>`;
     d.querySelector(".play").onclick = e => play(c, e.currentTarget);
     d.querySelector(".dl").onclick = () => download(c.blob, `코골이노트_${fname(new Date(c.start))}.wav`);
-    d.querySelector(".rm").onclick = async () => { if (!confirm("이 녹음을 지울까요?")) return; await del("clips", c.id); const nn = (await getAll("nights")).find(x => x.id === id); if (nn) { nn.count = Math.max(0, nn.count - 1); nn.secs = Math.max(0, (nn.secs || 0) - c.dur); await put("nights", nn); } renderNights(id); };
+    d.querySelector(".rm").onclick = async () => { if (!confirm("이 녹음을 지울까요?")) return; await del("clips", c.id); const nn = (await getAll("nights")).find(x => x.id === id); if (nn) { nn.count = Math.max(0, nn.count - 1); nn.secs = Math.max(0, (nn.secs || 0) - c.dur); nn.stat = null; await put("nights", nn); } renderNights(id); };
     box.appendChild(d);
   });
   [...$("nights").children].forEach(el => { if (el.querySelector(".d") && el.textContent.includes(hm(new Date(n.start)))) el.classList.add("on"); });
+}
+function drawGraph(n, clips) {                            // 📈 분마다 막대: 높이 = 그 분에 가장 큰 소리, 색 = 그 분의 녹음 종류
+  const g = $("graph"), st = Math.floor(n.start / 60000), en = Math.max(st + 1, Math.ceil((n.end || Date.now()) / 60000)), mins = Math.min(en - st, 24 * 60);
+  const kindAt = {}; clips.forEach(c => { for (let m = Math.floor(c.start / 60000); m <= Math.floor((c.start + c.dur * 1000) / 60000); m++) kindAt[m] = kindAt[m] === "s" || isSnore(c) ? "s" : "o"; });
+  let html = "";
+  for (let i = 0; i < mins; i++) {
+    const m = st + i, d = new Date(m * 60000), lv = (n.levels || {})[hm(d)] ?? -90, h = Math.max(3, Math.min(100, (lv + 80) * 1.45));
+    html += `<i data-m="${m}" class="${kindAt[m] || ""}" style="height:${h}%" title="${hm(d)} · ${lv > -90 ? lv + "dB" : "—"}${kindAt[m] === "s" ? " · 코골이" : kindAt[m] === "o" ? " · 기타 소리" : ""}"></i>`;
+  }
+  g.innerHTML = html;
+  const ticks = Math.min(5, mins); $("gx").innerHTML = ticks < 2 ? `<span>${hm(new Date(st * 60000))}</span>` : Array.from({ length: ticks }, (_, k) => `<span>${hm(new Date((st + Math.round((mins - 1) * k / (ticks - 1))) * 60000))}</span>`).join("");
+  g.onclick = e => {
+    const m = +e.target.dataset?.m; if (!m) return;
+    const c = clips.reduce((a, x) => (Math.abs(x.start / 60000 - m) < Math.abs((a?.start ?? 1e15) / 60000 - m) ? x : a), null);
+    if (!c || Math.abs(c.start / 60000 - m) > 10) { toast(`${hm(new Date(m * 60000))} 근처에는 녹음이 없습니다`); return; }
+    const el = $("clip-" + c.id); el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+  };
 }
 const fname = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 30000); }
@@ -328,7 +415,7 @@ function stopPlay() { if (playing) { playing.a.pause(); URL.revokeObjectURL(play
 function play(c, btn) {
   if (playing && playing.b === btn) { stopPlay(); return; }
   stopPlay(); const a = new Audio(URL.createObjectURL(c.blob)); playing = { a, b: btn }; btn.classList.add("on"); btn.textContent = "■";
-  a.onended = stopPlay; a.play().catch(() => { stopPlay(); toast("재생하지 못했습니다"); });
+  a.onended = stopPlay; a.play().catch(e => { if (e.name === "AbortError" || playing?.a !== a) return; stopPlay(); toast("재생하지 못했습니다"); });
 }
 $("dlAll").onclick = async () => {                        // 한 밤의 조각을 이어 붙여 WAV 하나로 (조각 사이 0.5초 쉼)
   const clips = await clipsOf(curNight); if (!clips.length) { toast("내려받을 녹음이 없습니다"); return; }
