@@ -19,6 +19,7 @@
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Pretendard Variable", Pretendard, -apple-system, "Malgun Gothic", sans-serif; font-size: 15px; line-height: 1.5; }
   button, input, select { font: inherit; color: inherit; }
+  html, body, button, .chip, .week div { touch-action: manipulation; }   /* 아이폰: 버튼을 빨리 두 번 누르면 화면이 확대되던 것 막기 (두 손가락 확대는 그대로) */
   .wrap { max-width: 760px; margin: 0 auto; padding: 18px 16px 60px; }
   header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
   .mark { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, #6d7ff7, #a78bfa); display: grid; place-items: center; font-size: 24px; box-shadow: 0 6px 18px #6d7ff744; }
@@ -103,14 +104,14 @@
   @media (min-width: 600px) { #modal { align-items: center; } }
   .hint { border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; margin-top: 8px; font-size: 13px; color: var(--dim); } .hint.me { border-color: var(--accent); color: #dfe4ff; background: #6d7ff714; }
   .big:disabled { opacity: .55; cursor: default; font-size: 16px; }
-  #lock { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+  #lock { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: flex; justify-content: center; padding: 20px; text-align: center; overflow-y: auto; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
   #lock[hidden] { display: none; }
-  #lock .lk { width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  #lkMsg { min-height: 24px; } #lkMsg.bad { color: var(--red); }
+  #lock .lk { width: 100%; max-width: 320px; margin: auto 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  #lkMsg { min-height: 48px; display: flex; align-items: center; justify-content: center; }   /* 글이 두 줄이 돼도 아래 숫자판이 밀리지 않게 */ #lkMsg.bad { color: var(--red); }
   .dots { display: flex; gap: 14px; } .dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent); } .dots i.f { background: var(--accent); }
   .dots.shake { animation: sh .4s; } @keyframes sh { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
   .pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 12px; justify-content: center; }
-  .pad button { height: 60px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); font-size: 22px; cursor: pointer; } .pad button:empty { visibility: hidden; }
+  .pad button { touch-action: manipulation; height: 60px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); font-size: 22px; cursor: pointer; } .pad button:empty { visibility: hidden; }
   @media (max-width: 480px) { .sum { grid-template-columns: repeat(2, 1fr); } .sum b { font-size: 17px; } .row > label { min-width: 100%; } }
   @media (max-width: 360px) { .wrap { padding: 14px 10px 50px; } .card { padding: 14px 12px; } .seg button { padding: 8px 10px; } header small { font-size: 12px; } .pad { grid-template-columns: repeat(3, 64px); } .clip { gap: 6px; padding: 8px; } .clip .t { min-width: 0; font-size: 14px; } .clip .bt { gap: 4px; } .clip button { width: 34px; height: 36px; font-size: 14px; } .clip .m { min-width: 100%; order: 5; } .meter { min-width: 120px; } }
 </style>

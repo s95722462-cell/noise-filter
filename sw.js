@@ -1,5 +1,5 @@
 // 코골이 노트 — 오프라인 실행용 (새 버전 먼저, 인터넷이 없으면 저장본)
-const CACHE = "snore-v5";
+const CACHE = "snore-v5b";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png"];
 const LAME = "https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js";   // MP3 변환 도구: 한 번 받으면 저장해 두고 씀
 self.addEventListener("install", e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())));
