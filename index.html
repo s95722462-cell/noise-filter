@@ -312,6 +312,7 @@
 
   /* ===== 잠금 (아이폰 암호 화면처럼) ===== */
   #lock { position: fixed; inset: 0; z-index: 60; color: #fff; background: radial-gradient(120% 70% at 80% 0%, #3b2a73, transparent 60%), linear-gradient(170deg, #1d1a4a, #050414 75%); display: flex; justify-content: center; padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom)); text-align: center; overflow-y: auto; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; color-scheme: dark; --focus: rgba(255,255,255,.8); }
+  .gpin { margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--ink2); }
   #lock .lk { width: 100%; max-width: 320px; margin: auto 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
   #lock .mark { width: 60px; height: 60px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(145deg, #5e5ce6, #9b5de5); box-shadow: 0 8px 24px rgba(94,92,230,.45), inset 0 0 0 .5px rgba(255,255,255,.2); }
   #lock .mark::before { content: ""; width: 30px; height: 30px; border-radius: 50%; box-shadow: inset -8px 2px 0 0 #ffe7a3; transform: rotate(-20deg); }
@@ -503,7 +504,7 @@
 
   </div>
   </div>
-  <div class="foot">코골이 노트 · 참고용 기록이며 의료 검사가 아닙니다<br>문의 : <a href="mailto:ds5yrj@hotmail.com">ds5yrj@hotmail.com</a> · <span id="ver">v9</span></div>
+  <div class="foot">코골이 노트 · 참고용 기록이며 의료 검사가 아닙니다<br>문의 : <a href="mailto:ds5yrj@hotmail.com">ds5yrj@hotmail.com</a> · <span id="ver">v10</span></div>
 </div>
 
 <div id="night" hidden>
@@ -852,6 +853,7 @@ async function endNight() {
   night.end = Date.now(); await put("nights", { ...night }).catch(() => {}); ls.set("active", null);
   micClose(); try { await wake?.release(); } catch (e) {} wake = null;
   const id = night.id, c = night.count, wasFull = full; night = null; full = false; nWarn(""); nightShow(false);
+  if (ls.get("pin", null) && !lk) { renderNights(id).catch(() => {}); await lockShow("unlock"); }   // 🔒 잠금을 켰으면 끝내자마자 PIN — 깬 사람만 기록을 봄
   toast(wasFull ? `잘 주무셨어요? — 자는 동안 저장 공간이 꽉 차서 녹음 ${c}개까지만 남겼습니다` : c ? `잘 주무셨어요? — 녹음 ${c}개를 남겼습니다. 메모도 남겨 보세요` : "잘 주무셨어요? — 녹음할 만한 소리가 없었습니다", 4500);
   await renderNights(id); renderStorage();
 }
@@ -1229,7 +1231,7 @@ const GUIDE = {
   and: ["안드로이드 — 앱 고정(화면 고정)", "<li><b>설정 → 보안</b>(또는 보안 및 개인정보 → 기타 보안 설정) → <b>앱 고정</b>을 켭니다.</li><li><b>고정 해제 전 잠금 화면 요청</b>(PIN 요청)도 켭니다.</li><li>최근 앱 화면에서 이 앱 아이콘 → <b>이 앱 고정</b>. 풀 때는 뒤로+최근 앱 버튼을 함께 길게 누릅니다.</li>"],
 };
 const guideFirst = isAndroid ? "and" : "ios";             // 휴대폰 종류에 맞는 방법을 먼저 (그 밖엔 아이폰부터)
-const guideHtml = k => `<div class="gplat">${GUIDE[k][0]}</div><ol class="gsteps">${GUIDE[k][1]}</ol>`;
+const guideHtml = k => `<div class="gplat">${GUIDE[k][0]}</div><ol class="gsteps">${GUIDE[k][1]}</ol><p class="gpin">녹음 기록까지 지키려면 <b>설정 → PIN 잠금</b>도 켜 두세요. ‘일어났어요’를 누른 뒤 바로 PIN을 묻습니다.</p>`;
 let gtShow = guideFirst;
 function renderGuide() {
   const on = !ls.get("guideOff", false); $("gTip").hidden = !on; if (!on) return;
