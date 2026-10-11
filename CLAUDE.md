@@ -12,7 +12,7 @@
 
 ## 구조
 - `index.html` 하나 (CSS + IIFE 스크립트). `manifest.webmanifest`, `sw.js`, `icons/`. 이 저장소가 원본 (PC 별도 사본 없음).
-- **push 할 때마다 `sw.js` 의 `CACHE` 번호를 올릴 것** (지금 `snore-v10` → 다음 `snore-v11`). sw.js 는 lamejs 도 캐시함.
+- **push 할 때마다 `sw.js` 의 `CACHE` 번호를 올릴 것** (지금 `snore-v11` → 다음 `snore-v12`). sw.js 는 lamejs 도 캐시함.
 - 외부 라이브러리: cdnjs lamejs 1.2.1 (MP3, 늦게 불러옴, 실패 시 WAV). 새 라이브러리도 cdnjs 정확한 버전만.
 - 저장: localStorage 접두사 `snore_` (`ls.get/ls.set`), 녹음은 IndexedDB `snore-note` (nights / clips). Blob 못 넣는 브라우저는 `clip.buf` → `fixClip`.
 
